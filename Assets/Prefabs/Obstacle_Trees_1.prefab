@@ -52,7 +52,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5162720833376458407}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 2.1677785, y: 3.6698277, z: 2.0967188}
@@ -84,8 +84,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Pool: {fileID: 0}
-  minSpawnPosition: {x: 25, y: 0, z: -0.5}
-  maxSpawnPosition: {x: 25, y: 0, z: 0}
+  minSpawnPosition: {x: 22, y: 0, z: -0.5}
+  maxSpawnPosition: {x: 30, y: 0, z: 0}
 --- !u!114 &-8341377157555258203
 MonoBehaviour:
   m_ObjectHideFlags: 0

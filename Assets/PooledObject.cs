@@ -5,6 +5,17 @@ using NinjaTools;
 
 public class PooledObject : NinjaMonoBehaviour {
     public ObjectPool Pool;
+    private void OnEnable() {
+        string logId = "OnEnable";
+        var children = GetComponentsInChildren<GameObject>();
+        var childrenCount = children.Length;
+        if(childrenCount==0) {
+            return;
+        }
+        for (int i = 0; i < childrenCount; i++) {
+            children[i].SetActive(true);
+        }
+    }
     public void ReturnToPool() {
         string logId = "ReturnToPool";
         if(Pool==null) {

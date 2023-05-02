@@ -7,9 +7,11 @@ public class OutOfBoundsHandler : NinjaMonoBehaviour {
     [SerializeField] private float xBounds = -20f;
     [SerializeField] private float checkDelay = 0.5f;
     [SerializeField] private IOutOfBoundsable outOfBoundsable;
-    private void Start() {
-        string logId = "Start";
+    private void Awake() {
         outOfBoundsable = outOfBoundsable??GetComponent<IOutOfBoundsable>();
+    }
+    private void OnEnable() {
+        string logId = "OnEnable";
         if(outOfBoundsable==null) {
             logw(logId, "Object="+name+" doesn't contain a IOutOfBoundsable component => no-op");
             return;
@@ -24,7 +26,7 @@ public class OutOfBoundsHandler : NinjaMonoBehaviour {
                 logd(logId, "OutOfBoundsable="+outOfBoundsable.logf()+" => Executing OnOutOfBounds");
                 outOfBoundsable.OnOutOfBounds();
             }
-        yield return waitForSeconds;
+            yield return waitForSeconds;
         }
     }
 }
