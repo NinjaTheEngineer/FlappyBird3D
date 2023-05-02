@@ -9,8 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2915127679589451365}
-  - component: {fileID: 5880206528135360025}
-  - component: {fileID: 2702061242074790043}
   - component: {fileID: 5699810143926431823}
   - component: {fileID: 3789493334526622217}
   m_Layer: 0
@@ -36,34 +34,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5880206528135360025
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 132155138788711325}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe70ee3dbecc15b4faaea9f5e607db97, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveAxis: {x: 1, y: 0, z: 0}
-  <Speed>k__BackingField: 2
---- !u!114 &2702061242074790043
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 132155138788711325}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dcf41f23167b7e749b33f26fa0aba9a5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  xBounds: -5
-  checkDelay: 0.5
 --- !u!114 &5699810143926431823
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5a3f91196fcf7345afaf9af9599aabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mover: {fileID: 5880206528135360025}
+  mover: {fileID: 0}
   animator: {fileID: 6957179502325586574}
 --- !u!65 &3789493334526622217
 BoxCollider:
