@@ -70,7 +70,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveAxis: {x: 1, y: 0, z: 0}
-  <Speed>k__BackingField: 5
+  <Speed>k__BackingField: 3
 --- !u!114 &7053095635418494866
 MonoBehaviour:
   m_ObjectHideFlags: 0

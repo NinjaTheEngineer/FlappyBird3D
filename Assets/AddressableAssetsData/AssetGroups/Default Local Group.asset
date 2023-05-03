@@ -21,6 +21,14 @@ MonoBehaviour:
     m_Address: Assets/Prefabs/Obstacle.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: a968ea8ec9ff15642852e1be8f69ce13
+    m_Address: Assets/Prefabs/Obstacle_Eagles_1.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 0f624b7de4c7c6541ab77f1f7c071efa
+    m_Address: Assets/Prefabs/Obstacle_Trees_1.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: f7292a6738561c64b8341f14cd5bec21, type: 2}
   m_SchemaSet:
