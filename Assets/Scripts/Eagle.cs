@@ -10,7 +10,7 @@ public class Eagle : NinjaMonoBehaviour, IHittable {
     [SerializeField] private ParticleSystem feathersFx;
     public float MovementSpeed {get; private set;}
     public void OnTriggerEnter() {
-        string logId = "OnTriggerEnter";
+        var logId = "OnTriggerEnter";
         logd(logId, "Playing FeatherFX and deactivating Eagle");
         feathersFx.Play();
         visu.SetActive(false);
@@ -23,7 +23,7 @@ public class Eagle : NinjaMonoBehaviour, IHittable {
     }
 
     private void OnEnable() {
-        string logId = "OnEnable";
+        var logId = "OnEnable";
         if(mover==null) {
             logw(logId, "Eagle="+gameObject.logf()+" doesn't have a Mover component => returning");
             return;

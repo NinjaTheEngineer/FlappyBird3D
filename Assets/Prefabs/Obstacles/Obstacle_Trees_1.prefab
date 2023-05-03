@@ -84,8 +84,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Pool: {fileID: 0}
-  minSpawnPosition: {x: 22, y: 0, z: -0.5}
-  maxSpawnPosition: {x: 30, y: 0, z: 0}
+  minSpawnPosition: {x: 16, y: 0, z: -1.5}
+  maxSpawnPosition: {x: 20, y: 0, z: 0.5}
 --- !u!114 &-8341377157555258203
 MonoBehaviour:
   m_ObjectHideFlags: 0

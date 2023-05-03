@@ -18,7 +18,7 @@ public class PlayerController : NinjaMonoBehaviour {
         rb = GetComponent<Rigidbody>();
     }
     private void Update() {
-        string logId = "Update";
+        var logId = "Update";
         if(rb==null) {
             logw(logId, "Rigidbody not found => no-op", true);
             return;
