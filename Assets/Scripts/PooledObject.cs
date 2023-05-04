@@ -4,7 +4,21 @@ using UnityEngine;
 using NinjaTools;
 
 public class PooledObject : NinjaMonoBehaviour {
-    public ObjectPool Pool;
+    private ObjectPool _pool;
+    public ObjectPool Pool {
+        get => _pool;
+        set {
+            var logId = "Pool";
+            if(_pool) {
+                _pool.OnPoolClear -= ReturnToPool;
+            }
+            logd(logId, "Setting Pool from "+_pool.logf()+" to "+value.logf());
+            _pool = value;
+            if(_pool) {
+                _pool.OnPoolClear += ReturnToPool;
+            }
+        }
+    }
     private void OnEnable() {
         var logId = "OnEnable";
         var children = GetComponentsInChildren<GameObject>();

@@ -17,7 +17,7 @@ public class Obstacle : PooledObject, IOutOfBoundsable {
         transform.position = spawnPosition;
     }
     public void OnOutOfBounds() {
-        var logId = "OnOutOfBounds";
+        string logId = "OnOutOfBounds";
         logd(logId,"Returning to pool", true);
         ReturnToPool();
     }

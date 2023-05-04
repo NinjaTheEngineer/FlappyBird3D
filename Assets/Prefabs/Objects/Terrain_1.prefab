@@ -83,6 +83,7 @@ GameObject:
   - component: {fileID: 7922841932607199533}
   - component: {fileID: 6816506819503448717}
   - component: {fileID: 6810083097762217275}
+  - component: {fileID: 3191879551068505072}
   m_Layer: 0
   m_Name: Terrain_1
   m_TagString: Untagged
@@ -120,7 +121,7 @@ Terrain:
   m_TreeBillboardDistance: 50
   m_TreeCrossFadeLength: 5
   m_TreeMaximumFullLODCount: 50
-  m_DetailObjectDistance: 80
+  m_DetailObjectDistance: 50
   m_DetailObjectDensity: 1
   m_HeightmapPixelError: 5
   m_SplatMapDistance: 1000
@@ -178,6 +179,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   xBounds: -35
   checkDelay: 0.5
+--- !u!114 &3191879551068505072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8711478851824403864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42b816460ab0d3b4ca9d5970a2810dd6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &62409383720339026
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 5162720833376458424}
   - component: {fileID: 1977683505}
   - component: {fileID: 1977683507}
-  - component: {fileID: 7053095635418494866}
+  - component: {fileID: 3846071743704526192}
   - component: {fileID: -8341377157555258203}
+  - component: {fileID: 7214238292865686331}
   m_Layer: 0
   m_Name: Obstacle_Trees_1
   m_TagString: Untagged
@@ -71,7 +72,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveAxis: {x: 1, y: 0, z: 0}
   <Speed>k__BackingField: 3
---- !u!114 &7053095635418494866
+--- !u!114 &3846071743704526192
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -83,9 +84,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb3810aca8eccea4d8121c7e3da77f4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Pool: {fileID: 0}
-  minSpawnPosition: {x: 16, y: 0, z: -1.5}
-  maxSpawnPosition: {x: 20, y: 0, z: 0.5}
+  minSpawnPosition: {x: 12.5, y: 0.45, z: -0.6}
+  maxSpawnPosition: {x: 15, y: 0.45, z: -0.1}
 --- !u!114 &-8341377157555258203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -100,6 +100,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   xBounds: -5
   checkDelay: 0.5
+--- !u!114 &7214238292865686331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5162720833376458407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42b816460ab0d3b4ca9d5970a2810dd6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &837185449651663532
 PrefabInstance:
   m_ObjectHideFlags: 0

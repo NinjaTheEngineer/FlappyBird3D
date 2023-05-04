@@ -15,7 +15,6 @@ public class Eagle : NinjaMonoBehaviour, IHittable {
         feathersFx.Play();
         visu.SetActive(false);
     }
-
     private void OnAwake() {
         if(mover==null) {
             mover = GetComponent<Mover>();

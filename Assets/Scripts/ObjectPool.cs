@@ -7,10 +7,10 @@ using System;
 public class ObjectPool : NinjaMonoBehaviour {
     [SerializeField] private uint initPoolSize;
     [SerializeField] private PooledObject objectToPool;
-
+    public System.Action OnPoolClear;
     private Stack<PooledObject> stack;
 
-    private void Start() {
+    private void Awake() {
         SetupPool();
     }
     private void Update() {
@@ -29,6 +29,9 @@ public class ObjectPool : NinjaMonoBehaviour {
             pooledObject.gameObject.SetActive(false);
             stack.Push(pooledObject);       
         }
+    }
+    public void Clear() {
+        OnPoolClear?.Invoke();
     }
 
     public PooledObject GetPooledObject() {

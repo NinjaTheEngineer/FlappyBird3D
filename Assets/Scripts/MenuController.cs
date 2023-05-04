@@ -3,9 +3,11 @@ using UnityEngine;
 using NinjaTools;
 using System;
 
-public class MenuController : NinjaMonoBehaviour {
+public abstract class MenuController : NinjaMonoBehaviour {
     public Vector3 activePosition;
     public Vector3 deactivatedPosition;
+    protected Action<float> activateAnimation = null;
+    protected Action<float> deactivateAnimation = null;
     public float animationTime = 0.5f;
     public MenuState CurrentState {
         get; protected set;
@@ -19,8 +21,9 @@ public class MenuController : NinjaMonoBehaviour {
         Deactivating,
         Deactivated
     }
-    public virtual void Activate(Action<float> activateAnimation = null) {
+    public virtual void Activate() {
         var logId = "Activate";
+        logd(logId, "Activating");
         gameObject.SetActive(true);
         if(activateAnimation==null) {
             logt(logId, "No animation for activating Menu="+name+" => Setting currentState to active");
@@ -31,7 +34,7 @@ public class MenuController : NinjaMonoBehaviour {
         }
     }
 
-    public virtual void Deactivate(Action<float> deactivateAnimation = null) {
+    public virtual void Deactivate() {
         var logId = "Deactivate";
         if(deactivateAnimation==null) {
             logt(logId, "No animation for deactivating Menu="+name+" => Setting currentState to deactivated");

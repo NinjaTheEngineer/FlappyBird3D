@@ -5,6 +5,7 @@ using NinjaTools;
 
 public class PlayerController : NinjaMonoBehaviour {
     [SerializeField] private float jumpForce = 5f;
+    [SerializeField] private float maxJumpHeight = 7f;
     [SerializeField] private float maxUpRotation = 60f;
     [SerializeField] private float maxDownRotation = -60f;
     [SerializeField] private float upRotationMultiplier = 2.5f;
@@ -14,8 +15,24 @@ public class PlayerController : NinjaMonoBehaviour {
     private bool isFlyingUp = false;
     private float timeSinceLastImpulse = 0;
     private Quaternion targetRotation;
-    private void Start() {
+    private void Awake() {
+        GameManager.OnGameStart += SetControllable;
+        GameManager.OnGameEnd += PlayerDestroyed;
         rb = GetComponent<Rigidbody>();
+        rb.isKinematic = true;
+    }
+    private void SetControllable() {
+        IsControllable = true;
+    }
+    private bool _isControllable;
+    public bool IsControllable {
+        get => _isControllable;
+        private set {
+            var logId = "IsControllable_set";
+            logd(logId, "Setting IsControllable from "+_isControllable+" to "+value);
+            _isControllable = value;
+            rb.isKinematic = !_isControllable;
+        }
     }
     private void Update() {
         var logId = "Update";
@@ -23,7 +40,11 @@ public class PlayerController : NinjaMonoBehaviour {
             logw(logId, "Rigidbody not found => no-op", true);
             return;
         }
-        if (Input.GetButtonDown("Jump")) {
+        if(!IsControllable) {
+            return;
+        }
+        var jumpInput = Input.GetButtonDown("Jump") || (Input.touchCount>0 && Input.GetTouch(0).phase==TouchPhase.Began);
+        if(jumpInput && transform.position.y <= maxJumpHeight) {
             rb.velocity = new Vector3(0f, jumpForce, 0f);
             isFlyingUp = true;
             timeSinceLastImpulse = 0;
@@ -38,6 +59,18 @@ public class PlayerController : NinjaMonoBehaviour {
         targetRotation = Quaternion.Euler(isFlyingUp?maxUpRotation:maxDownRotation, currentEulerAngles.y, currentEulerAngles.z);
     }
     private void FixedUpdate() {
+        if(!IsControllable) {
+            return;
+        }
         transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.fixedDeltaTime * (isFlyingUp ? upRotationMultiplier : downRotationMultiplier));
+    }
+    private void OnDestroy() {
+        GameManager.OnGameStart -= SetControllable;
+        GameManager.OnGameEnd -= PlayerDestroyed;
+    }
+    private void PlayerDestroyed() {
+        var logId = "PlayerDestroyed";
+        IsControllable = false;
+        Destroy(gameObject);
     }
 }
