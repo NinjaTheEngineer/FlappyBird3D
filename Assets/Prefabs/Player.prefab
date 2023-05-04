@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5868508162157664213}
   - component: {fileID: 5868508162157664202}
   - component: {fileID: 5868508162157664203}
+  - component: {fileID: 8306733320800603574}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -65,6 +66,7 @@ MonoBehaviour:
   downRotationMultiplier: 1.5
   fallDelay: 0.4
   rb: {fileID: 5868508162157664213}
+  <Engine>k__BackingField: {fileID: 8306733320800603574}
 --- !u!54 &5868508162157664213
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -106,6 +108,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a452a4072ac32124291171883b473cc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8306733320800603574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5868508162157664211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c974387049bc042439168cb483ed65ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <MaxDurability>k__BackingField: 100
+  <Durability>k__BackingField: 100
+  <WearOffDelay>k__BackingField: 0.1
+  <WearOffBaseRate>k__BackingField: 0.25
 --- !u!1001 &5868508162465880272
 PrefabInstance:
   m_ObjectHideFlags: 0

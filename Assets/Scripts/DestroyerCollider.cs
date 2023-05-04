@@ -4,7 +4,7 @@ using UnityEngine;
 using NinjaTools;
 
 public class DestroyerCollider : NinjaMonoBehaviour, IHittable {
-    public void OnTriggerEnter() {
+    public void OnHit() {
         GameManager.Instance.PlayerDestroyed();
     }
     private void OnCollisionEnter(Collision other) {

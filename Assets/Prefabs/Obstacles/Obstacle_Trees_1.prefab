@@ -84,8 +84,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb3810aca8eccea4d8121c7e3da77f4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minSpawnPosition: {x: 12.5, y: 0.45, z: -0.6}
-  maxSpawnPosition: {x: 15, y: 0.45, z: -0.1}
+  minSpawnPosition: {x: 10, y: 0.45, z: -0.6}
+  maxSpawnPosition: {x: 10.5, y: 0.45, z: -0.1}
 --- !u!114 &-8341377157555258203
 MonoBehaviour:
   m_ObjectHideFlags: 0

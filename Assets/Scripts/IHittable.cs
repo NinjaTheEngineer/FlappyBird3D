@@ -3,5 +3,5 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public interface IHittable {
-    public void OnTriggerEnter();
+    public void OnHit();
 }

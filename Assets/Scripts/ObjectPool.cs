@@ -3,20 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using NinjaTools;
 using System;
+using Random = UnityEngine.Random;
 
 public class ObjectPool : NinjaMonoBehaviour {
+    [SerializeField] private Vector3 minSpawnPosition;
+    [SerializeField] private Vector3 maxSpawnPosition;
     [SerializeField] private uint initPoolSize;
     [SerializeField] private PooledObject objectToPool;
     public System.Action OnPoolClear;
     private Stack<PooledObject> stack;
 
-    private void Awake() {
+    private void Start() {
         SetupPool();
-    }
-    private void Update() {
-        if(Input.GetKeyDown(KeyCode.W)) {
-            GetPooledObject();        
-        }
     }
     private void SetupPool() {
         var logId = "SetupPool";
@@ -39,14 +37,27 @@ public class ObjectPool : NinjaMonoBehaviour {
         if(stack.Count==0) {
             PooledObject newObject = Instantiate(objectToPool);
             newObject.Pool = this;
+            SpawnObject(newObject);
             logd(logId, "No objects of type "+newObject.GetType()+" in stack. Instantiated new object="+newObject.logf()+" for pool="+name+" => returning new object");
             return newObject;
         }
         PooledObject nextObject = stack.Pop();
-        nextObject.gameObject.SetActive(true);
+        SpawnObject(nextObject);
         logd(logId, "Popped object="+nextObject.logf()+" from stack => returning object");
         return nextObject;
     }
+
+    private void SpawnObject(PooledObject obj) {
+        var logId = "SpawnObject";
+        var spawnPosition = new Vector3(
+            Random.Range(minSpawnPosition.x, maxSpawnPosition.x),
+            Random.Range(minSpawnPosition.y, maxSpawnPosition.y),
+            Random.Range(minSpawnPosition.z, maxSpawnPosition.z)); 
+        logd(logId, "Setting "+obj.logf()+" position to "+spawnPosition);
+        obj.transform.position = spawnPosition;
+        obj.gameObject.SetActive(true);
+    }
+    
 
     public void ReturnToPool(PooledObject pooledObject) {
         var logId = "ReturnToPool";
