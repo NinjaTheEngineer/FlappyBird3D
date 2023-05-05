@@ -4,7 +4,9 @@ using UnityEngine;
 using NinjaTools;
 
 public class PlayerEngine : NinjaMonoBehaviour {
+    [SerializeField] ParticleSystem smokeFx;
     [field: SerializeField] public float MaxDurability {get; private set;}
+    public float maxSmokeEmissionRate = 5f;
     private float _durability;
     public float Durability { 
         get => _durability;
@@ -13,14 +15,23 @@ public class PlayerEngine : NinjaMonoBehaviour {
             value = Mathf.Clamp(value, 0, MaxDurability);
             logd(logId, "Setting Durability from "+_durability+" to "+ value);
             _durability = value;
+            var newEmissionRate = maxSmokeEmissionRate * (1 - (_durability / MaxDurability));
+            logd(logId, "NewEmission="+newEmissionRate);
+            var emission = smokeFx.emission;
+            emission.rateOverTime = newEmissionRate;
         }
     }
     [field: SerializeField] private float WearOffDelay {get; set;} 
     [field: SerializeField] private float WearOffBaseRate {get; set;} 
     public float DurabilityRatio => Durability/MaxDurability;
     public bool IsRunning { get; private set; }
+    private void Awake() {
+        var emission = smokeFx.emission;
+        emission.rateOverTime = 0;
+    }
     public void StartEngine() {
         var logId = "StartEngine";
+        smokeFx.gameObject.SetActive(true);
         Durability = MaxDurability;
         IsRunning = true;
         StartCoroutine(WearOffEngineRoutine());
@@ -28,6 +39,7 @@ public class PlayerEngine : NinjaMonoBehaviour {
     }
     public void StopEngine() {
         IsRunning = false;
+        smokeFx.gameObject.SetActive(false);
     }
     private IEnumerator CheckEngineRoutine() {
         var logId = "CheckEngineRoutine";
