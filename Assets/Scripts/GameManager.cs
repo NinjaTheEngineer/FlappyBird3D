@@ -5,14 +5,15 @@ using NinjaTools;
 
 public class GameManager : NinjaMonoBehaviour {
     public enum GameState {
-        None,
+        Start,
         Started,
         Paused,
         Ended
     }
     public GameState CurrentState {get; private set;}
     public static GameManager Instance;
-    [SerializeField] private float _gameSpeed;
+    [SerializeField] private float initialGameSpeed;
+    private float _gameSpeed;
     public float GameSpeed {
         get => _gameSpeed;
         private set {
@@ -33,8 +34,10 @@ public class GameManager : NinjaMonoBehaviour {
     private float _distanceTravelled;
     private float hitScore;
     public float Score => hitScore + (_distanceTravelled*0.1f);
+    public float Highscore { get; private set; }
     public void AddHitScore(float scoreAmount) => hitScore+=scoreAmount;
-    public static System.Action OnGameStart;
+    public static System.Action OnRestartGame;
+    public static System.Action OnGameStarted;
     public static System.Action OnGameEnd;
     public static System.Action<float> OnGameSpeedChange;
     private void Awake() {
@@ -46,7 +49,8 @@ public class GameManager : NinjaMonoBehaviour {
             Destroy(gameObject);
             return;
         }
-        Player = Instantiate(playerPrefab);
+        Highscore = PlayerPrefs.GetFloat(PlayerPrefs.Key.Highscore);
+        RestartGame();
     }
     public void StartGame() {
         var logId = "StartGame";
@@ -55,19 +59,39 @@ public class GameManager : NinjaMonoBehaviour {
             Player = Instantiate(playerPrefab);
         }
         _distanceTravelled = 0;
-        GameSpeed = 2f;
+        GameSpeed = initialGameSpeed;
         hitScore = 0;
         CurrentState = GameState.Started;
         StartCoroutine(IncreaseGameSpeedRoutine());
         StartCoroutine(TimeInGameRoutine());
-        OnGameStart?.Invoke();
+        OnGameStarted?.Invoke();
     }
     public void PlayerDestroyed() {
         var logId = "PlayerDestroyed";
         logd(logId, "Player destroyed!");
         CurrentState = GameState.Ended;
         GameSpeed = 0;
+        GameOver();
+    }
+    public void GameOver() {
+        var logId = "GameOver";
+        CurrentState = GameState.Ended;
+        logd(logId, " => Invoking OnGameEnd");
+        var highscore = Highscore;
+        var score = Score;
+        if(score>highscore) {
+            PlayerPrefs.SetFloat(PlayerPrefs.Key.Highscore, score);
+            Highscore = score;
+        }
         OnGameEnd?.Invoke();
+    }
+    public void RestartGame() {
+        var logId = "RestartGame";
+        logd(logId, "Restarting game");
+        CurrentState = GameState.Start;
+        OnRestartGame?.Invoke();
+        GameSpeed = initialGameSpeed;
+        Player = Player==null?Instantiate(playerPrefab):Player;
     }
     public float timeUpdateDelay = 0.5f;
     public IEnumerator TimeInGameRoutine() {

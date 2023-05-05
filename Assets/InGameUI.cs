@@ -12,7 +12,7 @@ public class InGameUI : NinjaMonoBehaviour {
     PlayerController playerController;
     PlayerEngine playerEngine;
     private void Start() {
-        GameManager.OnGameStart += Setup;
+        GameManager.OnGameStarted += Setup;
         GameManager.OnGameEnd += Deactivate;
         gameObject.SetActive(false);
     }

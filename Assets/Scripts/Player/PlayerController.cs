@@ -17,12 +17,28 @@ public class PlayerController : NinjaMonoBehaviour {
     private float timeSinceLastImpulse = 0;
     private Quaternion targetRotation;
     private void Awake() {
-        GameManager.OnGameStart += ResetPlayer;
+        GameManager.OnGameStarted += Reset;
         GameManager.OnGameEnd += PlayerDestroyed;
         rb = GetComponent<Rigidbody>();
         rb.isKinematic = true;
+        StartCoroutine(EnterSceneRoutine());
     }
-    private void ResetPlayer() {
+    public float enteringSpeed = 2f;
+    private IEnumerator EnterSceneRoutine() {
+        var logId = "EnterSceneRoutine";
+        Vector3 startPosition = transform.position;
+        Vector3 targetPosition = new Vector3(0, startPosition.y, startPosition.z);
+        float distance = Vector3.Distance(startPosition, targetPosition);
+        float time = 0f;
+        while(time<1 && !_isControllable){
+            time += Time.deltaTime * enteringSpeed / distance;
+            transform.position = Vector3.Lerp(startPosition, targetPosition, time);
+            yield return null;
+        }
+
+        transform.position = targetPosition;
+    }
+    private void Reset() {
         IsControllable = true;
         Engine.StartEngine();
     }
@@ -42,7 +58,7 @@ public class PlayerController : NinjaMonoBehaviour {
             logw(logId, "Rigidbody not found => no-op", true);
             return;
         }
-        if(!IsControllable || !Engine.EngineRunning) {
+        if(!IsControllable || !Engine.IsRunning) {
             return;
         }
         var jumpInput = Input.GetButtonDown("Jump") || (Input.touchCount>0 && Input.GetTouch(0).phase==TouchPhase.Began);
@@ -67,7 +83,7 @@ public class PlayerController : NinjaMonoBehaviour {
         transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.fixedDeltaTime * (isFlyingUp ? upRotationMultiplier : downRotationMultiplier));
     }
     private void OnDestroy() {
-        GameManager.OnGameStart -= ResetPlayer;
+        GameManager.OnGameStarted -= Reset;
         GameManager.OnGameEnd -= PlayerDestroyed;
     }
     private void PlayerDestroyed() {

@@ -44,8 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15698b46ba03d8e4d9939475739f8eb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPrefab: {fileID: 5868508162157664212, guid: 78aa430bf276d2e41ae6078a5806d397, type: 3}
-  _gameSpeed: 2
+  initialGameSpeed: 2
   speedIncreaseDelay: 10
   speedIncreaseDelayRate: 0.95
   speedIncreaseRate: 1.05
+  playerPrefab: {fileID: 5868508162157664212, guid: 78aa430bf276d2e41ae6078a5806d397, type: 3}
+  timeUpdateDelay: 0.5

@@ -18,11 +18,11 @@ public class PlayerEngine : NinjaMonoBehaviour {
     [field: SerializeField] private float WearOffDelay {get; set;} 
     [field: SerializeField] private float WearOffBaseRate {get; set;} 
     public float DurabilityRatio => Durability/MaxDurability;
-    public bool EngineRunning { get; private set; }
+    public bool IsRunning { get; private set; }
     public void StartEngine() {
         var logId = "StartEngine";
         Durability = MaxDurability;
-        EngineRunning = true;
+        IsRunning = true;
         StartCoroutine(WearOffEngineRoutine());
         StartCoroutine(CheckEngineRoutine());
     }
@@ -32,7 +32,7 @@ public class PlayerEngine : NinjaMonoBehaviour {
             if(Durability <= 0) {
                 logd(logId, "Durability="+Durability+" => Engine stopped running.");
                 Durability = 0;
-                EngineRunning = false;
+                IsRunning = false;
             }
             yield return new WaitForSeconds(0.25f);
         }
@@ -47,6 +47,6 @@ public class PlayerEngine : NinjaMonoBehaviour {
     public void AddWearOff(float wearAmount) => Durability -= wearAmount;
     public void FixDurability(float fixAmount) {
         Durability += fixAmount;
-        EngineRunning = true;
+        IsRunning = true;
     }
 }

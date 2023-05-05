@@ -30,7 +30,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5868508162157664211}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 4.25, z: 0}
+  m_LocalPosition: {x: -2.5, y: 4.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -67,6 +67,8 @@ MonoBehaviour:
   fallDelay: 0.4
   rb: {fileID: 5868508162157664213}
   <Engine>k__BackingField: {fileID: 8306733320800603574}
+  enteringSpeed: 4
+  enteringTime: 1
 --- !u!54 &5868508162157664213
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -108,6 +110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a452a4072ac32124291171883b473cc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerController: {fileID: 0}
 --- !u!114 &8306733320800603574
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121,7 +124,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <MaxDurability>k__BackingField: 100
-  <Durability>k__BackingField: 100
   <WearOffDelay>k__BackingField: 0.1
   <WearOffBaseRate>k__BackingField: 0.25
 --- !u!1001 &5868508162465880272

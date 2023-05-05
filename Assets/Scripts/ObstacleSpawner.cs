@@ -35,6 +35,6 @@ public class ObstacleSpawner : Spawner {
         }
     }
     private void OnDisable() {
-        GameManager.OnGameStart -= () => StartCoroutine(SpawnRoutine());
+        GameManager.OnGameStarted -= () => StartCoroutine(SpawnRoutine());
     }
 }
