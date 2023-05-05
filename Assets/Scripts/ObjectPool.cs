@@ -4,28 +4,47 @@ using UnityEngine;
 using NinjaTools;
 using System;
 using Random = UnityEngine.Random;
+using UnityEngine.ResourceManagement.AsyncOperations;
+using System.Threading.Tasks;
+using UnityEngine.AddressableAssets;
 
 public class ObjectPool : NinjaMonoBehaviour {
     [SerializeField] private Vector3 minSpawnPosition;
     [SerializeField] private Vector3 maxSpawnPosition;
     [SerializeField] private uint initPoolSize;
-    [SerializeField] private PooledObject objectToPool;
+    [SerializeField] private AssetReferenceGameObject objectToPool;
     public System.Action OnPoolClear;
     private Stack<PooledObject> stack;
+    private PooledObject loadedPooledObject;
 
-    private void Start() {
+    private void Awake() {
         SetupPool();
     }
     private void SetupPool() {
         var logId = "SetupPool";
         stack = new Stack<PooledObject>();
-        PooledObject pooledObject = null;
-
-        for (int i = 0; i < initPoolSize; i++) {
-            pooledObject = Instantiate(objectToPool);
-            pooledObject.Pool = this;
-            pooledObject.gameObject.SetActive(false);
-            stack.Push(pooledObject);       
+        LoadPooledObject();
+    }
+    private void LoadPooledObject() {
+        AsyncOperationHandle<GameObject> asyncOperationHandle = objectToPool.LoadAssetAsync<GameObject>();
+        asyncOperationHandle.Completed += OnObjectLoaded;
+    }
+    private void OnObjectLoaded(AsyncOperationHandle<GameObject> asyncOperationHandle) {
+        var logId = "OnObjectLoaded";
+        logd(logId, "AsyncOperationHandle="+asyncOperationHandle.logf());
+        if(asyncOperationHandle.Status == AsyncOperationStatus.Succeeded) {
+            loadedPooledObject = asyncOperationHandle.Result?.GetComponent<PooledObject>();
+            if(loadedPooledObject==null) {
+                logw(logId, "LoadedObject="+loadedPooledObject.logf()+" => no-op");
+                return;
+            }
+            logd(logId, "Loaded LoadedObject="+loadedPooledObject.logf()+" => populating pool");
+            for (int i = 0; i < initPoolSize; i++) {
+                var pooledObject = Instantiate(loadedPooledObject).GetComponent<PooledObject>();
+                pooledObject.Pool = this;
+                pooledObject.gameObject.SetActive(false);
+                stack.Push(pooledObject);       
+            }
         }
     }
     public void Clear() {
@@ -35,11 +54,15 @@ public class ObjectPool : NinjaMonoBehaviour {
     public PooledObject GetPooledObject() {
         var logId = "GetPooledObject";
         if(stack.Count==0) {
-            PooledObject newObject = Instantiate(objectToPool);
-            newObject.Pool = this;
-            SpawnObject(newObject);
-            logd(logId, "No objects of type "+newObject.GetType()+" in stack. Instantiated new object="+newObject.logf()+" for pool="+name+" => returning new object");
-            return newObject;
+            if(loadedPooledObject==null) {
+                logw(logId, "LoadedPooledObject="+loadedPooledObject.logf()+" => returning null");
+                return null;                
+            }
+            var pooledObject = Instantiate(loadedPooledObject).GetComponent<PooledObject>();
+            pooledObject.Pool = this;
+            SpawnObject(pooledObject);
+            logd(logId, "No objects of type "+pooledObject.GetType()+" in stack. Instantiated new object="+pooledObject.logf()+" for pool="+name+" => returning new object");
+            return pooledObject;
         }
         PooledObject nextObject = stack.Pop();
         SpawnObject(nextObject);

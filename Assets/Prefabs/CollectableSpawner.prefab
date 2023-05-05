@@ -46,6 +46,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectPools:
   - {fileID: 6114648893299760653, guid: da6185b0c99c2544cb2b160a279cc69b, type: 3}
-  spawnDelay: 5
+  spawnDelay: 4
   minSpawnDelay: 1
   maxSpawnDelay: 3

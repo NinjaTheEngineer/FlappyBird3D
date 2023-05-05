@@ -34,9 +34,7 @@ public class ObstacleSpawner : Spawner {
             yield return new WaitForSeconds(spawnDelay);
         }
     }
-
     private void OnDisable() {
         GameManager.OnGameStart -= () => StartCoroutine(SpawnRoutine());
     }
-    
 }

@@ -46,5 +46,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minSpawnPosition: {x: 9, y: 2.5, z: 3}
   maxSpawnPosition: {x: 9.5, y: 5.25, z: 3.6}
-  initPoolSize: 2
-  objectToPool: {fileID: 2512471996254476624, guid: a968ea8ec9ff15642852e1be8f69ce13, type: 3}
+  initPoolSize: 5
+  objectToPool:
+    m_AssetGUID: a968ea8ec9ff15642852e1be8f69ce13
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0

@@ -44,7 +44,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42a514d561fa6104385e01368fdd6367, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minSpawnPosition: {x: 6, y: 1, z: -0.2}
+  minSpawnPosition: {x: 6, y: 2.5, z: -0.2}
   maxSpawnPosition: {x: 6.5, y: 6.75, z: 0.2}
-  initPoolSize: 2
-  objectToPool: {fileID: 8252274197459822754, guid: 766ed0fa31723d84b92becaf8f72d0e8, type: 3}
+  initPoolSize: 5
+  objectToPool:
+    m_AssetGUID: 766ed0fa31723d84b92becaf8f72d0e8
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0

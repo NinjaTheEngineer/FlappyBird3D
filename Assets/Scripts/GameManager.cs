@@ -4,8 +4,6 @@ using UnityEngine;
 using NinjaTools;
 
 public class GameManager : NinjaMonoBehaviour {
-    [SerializeField] private PlayerController playerPrefab;
-    public PlayerController Player { get; private set;}
     public enum GameState {
         None,
         Started,
@@ -30,6 +28,12 @@ public class GameManager : NinjaMonoBehaviour {
     [SerializeField] [Range(1, 20)] private float speedIncreaseDelay;
     [SerializeField] [Range(0,1)] private float speedIncreaseDelayRate = 0.95f; 
     [SerializeField] [Range(1, 2)] private float speedIncreaseRate = 1.1f; 
+    [SerializeField] private PlayerController playerPrefab;
+    public PlayerController Player { get; private set;}
+    private float _distanceTravelled;
+    private float hitScore;
+    public float Score => hitScore + (_distanceTravelled*0.1f);
+    public void AddHitScore(float scoreAmount) => hitScore+=scoreAmount;
     public static System.Action OnGameStart;
     public static System.Action OnGameEnd;
     public static System.Action<float> OnGameSpeedChange;
@@ -47,11 +51,15 @@ public class GameManager : NinjaMonoBehaviour {
     public void StartGame() {
         var logId = "StartGame";
         if(!Player || !Player.isActiveAndEnabled) {
+            logd(logId, "Player not initialized => Initializing Player");
             Player = Instantiate(playerPrefab);
         }
+        _distanceTravelled = 0;
         GameSpeed = 2f;
-        StartCoroutine(IncreaseGameSpeedRoutine());
+        hitScore = 0;
         CurrentState = GameState.Started;
+        StartCoroutine(IncreaseGameSpeedRoutine());
+        StartCoroutine(TimeInGameRoutine());
         OnGameStart?.Invoke();
     }
     public void PlayerDestroyed() {
@@ -60,6 +68,14 @@ public class GameManager : NinjaMonoBehaviour {
         CurrentState = GameState.Ended;
         GameSpeed = 0;
         OnGameEnd?.Invoke();
+    }
+    public float timeUpdateDelay = 0.5f;
+    public IEnumerator TimeInGameRoutine() {
+        var logId = "TimeInGameRoutine";
+        while(CurrentState==GameState.Started) {
+            _distanceTravelled += (timeUpdateDelay*_gameSpeed);
+            yield return new WaitForSeconds(0.05f);
+        }
     }
     public IEnumerator IncreaseGameSpeedRoutine() {
         var logId = "IncreaseGameSpeedRoutine";

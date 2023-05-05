@@ -8,6 +8,7 @@ public class Eagle : NinjaMonoBehaviour, IHittable, ICollectable {
     [SerializeField] private Animator animator;
     [SerializeField] private GameObject visu;
     [SerializeField] private ParticleSystem feathersFx;
+    [SerializeField] private float worthValue = 5f;
     [SerializeField] private float hitDamage = 5f;
     public float MovementSpeed {get; private set;}
     public void OnCollected(PlayerController playerController) {
@@ -24,6 +25,7 @@ public class Eagle : NinjaMonoBehaviour, IHittable, ICollectable {
         logd(logId, "Playing FeatherFX and deactivating Eagle");
         feathersFx.Play();
         visu.SetActive(false);
+        GameManager.Instance.AddHitScore(worthValue);
     }
     private void OnAwake() {
         if(mover==null) {

@@ -29,6 +29,10 @@ MonoBehaviour:
     m_Address: Assets/Prefabs/Obstacle_Trees_1.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 766ed0fa31723d84b92becaf8f72d0e8
+    m_Address: Assets/Prefabs/Collectable_Wrench.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: f7292a6738561c64b8341f14cd5bec21, type: 2}
   m_SchemaSet:

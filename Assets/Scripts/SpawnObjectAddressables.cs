@@ -10,6 +10,16 @@ public class AssetReferenceObstacle : AssetReferenceT<Obstacle> {
     public AssetReferenceObstacle(string guid) : base(guid) {}
 }
 
+[System.Serializable]
+public class AssetReferenceObjectPool : AssetReferenceT<ObjectPool> {
+    public AssetReferenceObjectPool(string guid) : base(guid) {}
+}
+
+[System.Serializable]
+public class AssetReferencePooledObject : AssetReferenceT<PooledObject> {
+    public AssetReferencePooledObject(string guid) : base(guid) {}
+}
+
 public class SpawnObjectAddressables : NinjaMonoBehaviour {
     [SerializeField] private List<AssetReferenceGameObject> assetReferences;
     private void OnEnable() {
