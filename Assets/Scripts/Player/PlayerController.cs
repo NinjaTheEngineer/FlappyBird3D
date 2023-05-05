@@ -16,18 +16,28 @@ public class PlayerController : NinjaMonoBehaviour {
     private bool isFlyingUp = false;
     private float timeSinceLastImpulse = 0;
     private Quaternion targetRotation;
+    private Vector3 startPosition;
+    private Quaternion startRotation;
     private void Awake() {
+        startPosition = transform.position;
+        startRotation = transform.rotation;
+        rb = GetComponent<Rigidbody>();
         GameManager.OnGameStarted += Reset;
         GameManager.OnGameEnd += PlayerDestroyed;
-        rb = GetComponent<Rigidbody>();
+    }
+    public void Initialize() {
+        var logId = "Initialize";
         rb.isKinematic = true;
+        logd(logId,"Setting position from "+transform.position+" to "+startPosition);
+        transform.position = startPosition;
+        transform.rotation = startRotation;
         StartCoroutine(EnterSceneRoutine());
     }
     public float enteringSpeed = 2f;
     private IEnumerator EnterSceneRoutine() {
         var logId = "EnterSceneRoutine";
-        Vector3 startPosition = transform.position;
         Vector3 targetPosition = new Vector3(0, startPosition.y, startPosition.z);
+        logd(logId,"Entering scene from "+transform.position+" to "+targetPosition);
         float distance = Vector3.Distance(startPosition, targetPosition);
         float time = 0f;
         while(time<1 && !_isControllable){
@@ -89,6 +99,20 @@ public class PlayerController : NinjaMonoBehaviour {
     private void PlayerDestroyed() {
         var logId = "PlayerDestroyed";
         IsControllable = false;
-        Destroy(gameObject);
+        Engine.StopEngine();
+        StartCoroutine(PlayerCrashRoutine());
+    }
+    public float crashingTime = 0.5f;
+    public float crashSpeed = 10f;
+    public Vector3 axis = Vector3.forward;
+    private IEnumerator PlayerCrashRoutine() {
+        var logId = "PlayerCrashRoutine";
+        var crashTime = Time.realtimeSinceStartup;
+        while(Time.realtimeSinceStartup - crashTime < crashingTime) {
+            transform.position += Time.deltaTime * axis * crashSpeed;
+            yield return true;
+        }
+        rb.isKinematic = false;
+        //Explosion;
     }
 }

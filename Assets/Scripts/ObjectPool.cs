@@ -17,7 +17,7 @@ public class ObjectPool : NinjaMonoBehaviour {
     private Stack<PooledObject> stack;
     private PooledObject loadedPooledObject;
 
-    private void Awake() {
+    private void Start() {
         SetupPool();
     }
     private void SetupPool() {

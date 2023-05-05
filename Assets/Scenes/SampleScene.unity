@@ -1258,7 +1258,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activePosition: {x: 0, y: 0, z: 0}
-  deactivatedPosition: {x: 0, y: 3000, z: 0}
+  deactivatedPosition: {x: 0, y: 2000, z: 0}
   animationTime: 0.25
   scoreVisu: {fileID: 1074269547}
   scoreText: {fileID: 1789279386}
@@ -1931,8 +1931,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activePosition: {x: 0, y: 0, z: 0}
-  deactivatedPosition: {x: 0, y: -3000, z: 0}
-  animationTime: 0.2
+  deactivatedPosition: {x: 0, y: -2000, z: 0}
+  animationTime: 0.25
 --- !u!114 &1281274718
 MonoBehaviour:
   m_ObjectHideFlags: 0

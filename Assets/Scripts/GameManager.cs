@@ -36,7 +36,7 @@ public class GameManager : NinjaMonoBehaviour {
     public float Score => hitScore + (_distanceTravelled*0.1f);
     public float Highscore { get; private set; }
     public void AddHitScore(float scoreAmount) => hitScore+=scoreAmount;
-    public static System.Action OnRestartGame;
+    public static System.Action OnGameInitialized;
     public static System.Action OnGameStarted;
     public static System.Action OnGameEnd;
     public static System.Action<float> OnGameSpeedChange;
@@ -50,7 +50,7 @@ public class GameManager : NinjaMonoBehaviour {
             return;
         }
         Highscore = PlayerPrefs.GetFloat(PlayerPrefs.Key.Highscore);
-        RestartGame();
+        InitializeGame();
     }
     public void StartGame() {
         var logId = "StartGame";
@@ -68,6 +68,10 @@ public class GameManager : NinjaMonoBehaviour {
     }
     public void PlayerDestroyed() {
         var logId = "PlayerDestroyed";
+        if(CurrentState==GameState.Ended) {
+            logw(logId, "Game already over => no-op");
+            return;
+        }
         logd(logId, "Player destroyed!");
         CurrentState = GameState.Ended;
         GameSpeed = 0;
@@ -85,13 +89,14 @@ public class GameManager : NinjaMonoBehaviour {
         }
         OnGameEnd?.Invoke();
     }
-    public void RestartGame() {
-        var logId = "RestartGame";
-        logd(logId, "Restarting game");
+    public void InitializeGame() {
+        var logId = "InitializeGame";
+        logd(logId, "Initializing game");
         CurrentState = GameState.Start;
-        OnRestartGame?.Invoke();
+        OnGameInitialized?.Invoke();
         GameSpeed = initialGameSpeed;
         Player = Player==null?Instantiate(playerPrefab):Player;
+        Player?.Initialize();
     }
     public float timeUpdateDelay = 0.5f;
     public IEnumerator TimeInGameRoutine() {

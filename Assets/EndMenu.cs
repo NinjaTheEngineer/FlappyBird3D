@@ -10,15 +10,15 @@ public class EndMenu : MenuController {
     public TextMeshProUGUI highscoreText;
     private void Start() {
         var logId = "Start";
-        GameManager.OnGameEnd += Initialize;
         activateAnimation = ActivateAnimation;
         deactivateAnimation = DeactivateAnimation;
+        GameManager.OnGameEnd += Initialize;
         gameObject.SetActive(false);
     }
     public void RestartGame() {
         var logId = "RestartGame";
         Deactivate();
-        GameManager.Instance.RestartGame();
+        GameManager.Instance.InitializeGame();
     }
     public void Initialize() {
         var gameManager = GameManager.Instance;
@@ -28,12 +28,6 @@ public class EndMenu : MenuController {
         highscoreText.text = highscore.ToString("F0");
         scoreVisu.SetActive(score!=highscore);
         Activate();
-    }
-    protected void ActivateAnimation(float t) {
-        transform.localPosition = Vector3.Lerp(deactivatedPosition, activePosition, t);
-    }
-    protected void DeactivateAnimation(float t) {
-        transform.localPosition = Vector3.Lerp(activePosition, deactivatedPosition, t);
     }
     private void OnDestroy() {
         GameManager.OnGameEnd -= Initialize;

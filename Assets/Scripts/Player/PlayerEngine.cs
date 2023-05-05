@@ -26,6 +26,9 @@ public class PlayerEngine : NinjaMonoBehaviour {
         StartCoroutine(WearOffEngineRoutine());
         StartCoroutine(CheckEngineRoutine());
     }
+    public void StopEngine() {
+        IsRunning = false;
+    }
     private IEnumerator CheckEngineRoutine() {
         var logId = "CheckEngineRoutine";
         while(gameObject.activeInHierarchy) {
@@ -39,7 +42,7 @@ public class PlayerEngine : NinjaMonoBehaviour {
     }
     private IEnumerator WearOffEngineRoutine() {
         var logId = "WearOffEngineRoutine";
-        while(gameObject.activeInHierarchy) {
+        while(IsRunning) {
             Durability -= WearOffBaseRate;
             yield return new WaitForSeconds(WearOffDelay);
         }

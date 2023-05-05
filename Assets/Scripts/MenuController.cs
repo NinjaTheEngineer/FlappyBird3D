@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using NinjaTools;
 using System;
+using UnityEngine.UI;
 
 public abstract class MenuController : NinjaMonoBehaviour {
     public Vector3 activePosition;
@@ -11,9 +12,6 @@ public abstract class MenuController : NinjaMonoBehaviour {
     public float animationTime = 0.5f;
     public MenuState CurrentState {
         get; protected set;
-    }
-    private void Awake() {
-        deactivatedPosition.y = 0-Screen.height/2f-GetComponent<RectTransform>().sizeDelta.y;
     }
     public enum MenuState {
         Activating,
@@ -58,5 +56,11 @@ public abstract class MenuController : NinjaMonoBehaviour {
             yield return true;
         }
         callback?.Invoke();
+    }
+    protected virtual void ActivateAnimation(float t) {
+        transform.localPosition = Vector3.Lerp(deactivatedPosition, activePosition, t);
+    }
+    protected virtual void DeactivateAnimation(float t) {
+        transform.localPosition = Vector3.Lerp(activePosition, deactivatedPosition, t);
     }
 }

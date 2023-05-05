@@ -12,7 +12,7 @@ public abstract class Spawner : NinjaMonoBehaviour {
     [SerializeField] [Range(0.5f, 5f)] protected float maxSpawnDelay = 3f;
     private void Start() {
         GameManager.OnGameStarted += OnGameStarted;
-        GameManager.OnRestartGame += ClearObjects;
+        GameManager.OnGameInitialized += ClearObjects;
     }
     public abstract void OnGameStarted();
     public abstract IEnumerator SpawnRoutine();
@@ -41,6 +41,6 @@ public abstract class Spawner : NinjaMonoBehaviour {
     }
     private void OnDisable() {
         GameManager.OnGameStarted -= OnGameStarted;
-        GameManager.OnRestartGame -= ClearObjects;
+        GameManager.OnGameInitialized -= ClearObjects;
     }
 }
