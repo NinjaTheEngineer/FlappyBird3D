@@ -25,6 +25,7 @@ public class Eagle : NinjaMonoBehaviour, IHittable, ICollectable {
         logd(logId, "Playing FeatherFX and deactivating Eagle");
         feathersFx.Play();
         visu.SetActive(false);
+        AudioManager.Instance.PlayEagleSound(EagleSounds.DEATH);
         GameManager.Instance.AddHitScore(worthValue);
     }
     private void OnAwake() {
@@ -45,5 +46,15 @@ public class Eagle : NinjaMonoBehaviour, IHittable, ICollectable {
         var moverSpeed = mover.Speed; 
         MovementSpeed = moverSpeed;
         animator.speed = moverSpeed;
+        StartCoroutine(PlayFlySoundRoutine());
+    }
+    private IEnumerator PlayFlySoundRoutine() {
+        var logId = "PlayFlySoundRoutine";
+        var audioManager = AudioManager.Instance;
+        var gameManager = GameManager.Instance;
+        while(gameObject.activeInHierarchy && gameManager.CurrentState==GameManager.GameState.Started) {
+            audioManager.PlayEagleSound(EagleSounds.FLY);
+            yield return new WaitForSeconds(Random.Range(0.5f, 2f));
+        }
     }
 }

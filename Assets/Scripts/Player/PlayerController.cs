@@ -73,9 +73,7 @@ public class PlayerController : NinjaMonoBehaviour {
         }
         var jumpInput = Input.GetButtonDown("Jump") || (Input.touchCount>0 && Input.GetTouch(0).phase==TouchPhase.Began);
         if(jumpInput && transform.position.y <= maxJumpHeight) {
-            rb.velocity = new Vector3(0f, jumpForce, 0f);
-            isFlyingUp = true;
-            timeSinceLastImpulse = 0;
+            FlyUp();
         }
         if(isFlyingUp){
             timeSinceLastImpulse += Time.deltaTime;
@@ -85,6 +83,12 @@ public class PlayerController : NinjaMonoBehaviour {
         }
         var currentEulerAngles = transform.rotation.eulerAngles;
         targetRotation = Quaternion.Euler(isFlyingUp?maxUpRotation:maxDownRotation, currentEulerAngles.y, currentEulerAngles.z);
+    }
+    private void FlyUp() {
+        AudioManager.Instance.PlayPlayerSound(PlayerSounds.FLY);
+        rb.velocity = new Vector3(0f, jumpForce, 0f);
+        isFlyingUp = true;
+        timeSinceLastImpulse = 0;
     }
     private void FixedUpdate() {
         if(!IsControllable) {
@@ -113,6 +117,7 @@ public class PlayerController : NinjaMonoBehaviour {
             yield return true;
         }
         rb.isKinematic = false;
+        AudioManager.Instance.PlayPlayerSound(PlayerSounds.CRASH);
         //Explosion;
     }
 }

@@ -51,5 +51,6 @@ public class PlayerEngine : NinjaMonoBehaviour {
     public void FixDurability(float fixAmount) {
         Durability += fixAmount;
         IsRunning = true;
+        AudioManager.Instance.PlayPlayerSound(PlayerSounds.FIX);
     }
 }

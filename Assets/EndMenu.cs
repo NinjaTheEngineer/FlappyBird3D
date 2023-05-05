@@ -18,6 +18,7 @@ public class EndMenu : MenuController {
     public void RestartGame() {
         var logId = "RestartGame";
         Deactivate();
+        AudioManager.Instance.PlayUISound(UISounds.BUTTON_CLICK_2);
         GameManager.Instance.InitializeGame();
     }
     public void Initialize() {
